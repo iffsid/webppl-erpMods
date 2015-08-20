@@ -15,7 +15,7 @@ module.exports = function(env) {
 
   ERP.prototype.toJSON = function() {
     var basicJSON = oldtoJSON.bind(this)().erp;
-    var extendedJSON = {erp: _.extend(basicJSON, {preImageERP: this.preImageERP})}
+    var extendedJSON = {erp: basicJSON.concat([{preImageERP: this.preImageERP}])}
     this.toJSON = function() {return extendedJSON};
     return extendedJSON;
   }
