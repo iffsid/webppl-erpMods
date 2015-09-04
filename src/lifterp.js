@@ -15,7 +15,7 @@ module.exports = function(env) {
 
   ERP.prototype.toJSON = function() {
     var basicJSON = oldtoJSON.bind(this)().erp;
-    var extendedJSON = {erp: basicJSON.concat([{preImageERP: this.preImageERP}])}
+    var extendedJSON = {erp: _.extend(basicJSON, {preImageERP: this.preImageERP})}
     this.toJSON = function() {return extendedJSON};
     return extendedJSON;
   }
@@ -45,7 +45,7 @@ module.exports = function(env) {
                                     return util.logsumexp([acc, val.score]);
                                   },
                                   -Infinity);
-          preImageERP[label] = {vs: subVs, ps: subPs}; // compute sub-distribution
+          preImageERP[label] = {ps: subPs, vs: subVs}; // compute sub-distribution
           return {val: eqClass[0].liftedSupport, prob: aggScore}})
         .value();
     var liftedERP = makeMarginalERP(liftedDist);
